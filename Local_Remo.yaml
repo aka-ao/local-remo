@@ -1,0 +1,124 @@
+openapi: 3.0.0
+info:
+  title: Local Remo
+  version: '1.0'
+  description: ''
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /signal:
+    parameters: []
+    get:
+      summary: 信号取得
+      tags: []
+      responses:
+        '200':
+          description: Nature Remoから赤外線信号を取得する
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Signal'
+              examples: {}
+        '404':
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-users-userId
+      description: Retrieve the information of the user with the matching user ID.
+  '/signal/{name}':
+    parameters:
+      - schema:
+          type: string
+        name: name
+        in: path
+        required: true
+    post:
+      summary: ''
+      operationId: post-signal-name
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignalTable'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Signal'
+            examples: {}
+  /all-signal:
+    get:
+      summary: 登録信号取得
+      tags: []
+      responses: {}
+      operationId: get-all-signal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SignalTable'
+  '/signal/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    delete:
+      summary: ''
+      operationId: delete-signal-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+components:
+  schemas:
+    Signal:
+      title: Signal
+      type: object
+      properties:
+        freq:
+          type: integer
+        data:
+          type: array
+          items:
+            type: integer
+        format:
+          type: string
+    SignalTable:
+      title: SignalTable
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID形式
+        name:
+          type: string
+        json:
+          type: string
+          description: NatureRemoに送受信するデータそのまま
+    Error:
+      title: Error
+      type: object
+      properties:
+        message:
+          type: string
+        detail:
+          type: string
+    Success:
+      title: Success
+      type: object
+      properties:
+        message:
+          type: string
