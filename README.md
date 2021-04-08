@@ -21,3 +21,13 @@ Timestamp     A/R    Flags if Hostname                               Address    
 21:33:13.131  Rmv        0  4 Remo-9D3182.local.                     192.168.11.2                                 0
 22:02:23.542  Add        2  4 Remo-9D3182.local.                     192.168.11.2                                 120
 ``` 
+1. ローカルIPアドレスを設定
+- `src/main/resources/application.properties`の`info.akahori-s.local-remo.signal.host`の項目に上記のIPアドレスを設定する。
+
+1. cassandra起動
+- `cd $(pwd)/local-remo`
+- `docker-compose up -d`
+
+1. サーバ起動
+- `cd $(pwd)/local-remo`
+- `mvn spring-boot:run`
